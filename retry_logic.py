@@ -1,21 +1,25 @@
 
 
-MAX_RETRIES = 10
+MAX_RETRIES = 3
 import time 
 
 def some_fnc():
-    retry_number = 1
+    delay = 30
+    retry_count = 1
     while True:
-        if retry_number == MAX_RETRIES:
+        if retry_count == MAX_RETRIES:
             break 
         try:
-            retry_number = retry_number + 1
+            retry_count = retry_count + 1
             # Code logic goes here 
             x = 1/0
         except Exception as e:
-            print('Retrying number ' +str(retry_number))
-            # Wait for 30 sec before retry 
-            time.sleep(30)
+            print('Retrying number ' +str(retry_count))
+            # Delay before retry 
+            delay = delay + delay
+            print('Delay', delay)
+            delay = delay * retry_count
+            time.sleep(delay)
             continue 
         break
 
