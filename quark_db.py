@@ -2,6 +2,7 @@
 
 from neutron.db import api as ndbapi
 from oslo_utils import timeutils
+from quark.db.models import *
 session = ndbapi.get_session()
 from quark.db.models import IPAddress
 # table to query quark_ip_address 
