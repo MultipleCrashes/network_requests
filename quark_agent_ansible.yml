@@ -1,0 +1,16 @@
+
+# Command to run playbook : ansible-playbook  quark_agent_ansible.yml --extra-vars='ansible_sudo_pass=harish'
+
+---
+- name: Verify quark agent proper
+  hosts: localhost
+  remote_user: harish
+  become: sudo
+  tasks:
+        - name: Transfer script 
+          copy: src=agent_checker.sh dest=~ mode=0777
+          register: out
+
+        - name: Execute the script 
+          command: sh ~/agent_checker.sh
+          register: out
