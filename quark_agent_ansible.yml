@@ -5,12 +5,22 @@
 - name: Verify quark agent proper
   hosts: localhost
   remote_user: harish
+  port: 2229
   become: sudo
   tasks:
-        - name: Transfer script 
+        - name: Transfer script
           copy: src=agent_checker.sh dest=~ mode=0777
-          register: out
 
         - name: Execute the script 
           command: sh ~/agent_checker.sh
-          register: out
+          register: agent_checker.sh
+
+        - name: Grep log file 
+          chdir: '/var/log/neutron'
+          command: 'cat quark-agent.log | grep -i error'
+          register: grep_output
+
+        - debug:
+            var: grep_output.stdout_lines
+          
+          
