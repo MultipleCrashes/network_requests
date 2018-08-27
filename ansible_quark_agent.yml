@@ -1,0 +1,27 @@
+
+# Command to run playbook : ansible-playbook  ansible_quark_agent.yml --extra-vars='ansible_sudo_pass=harish' -v
+
+---
+- name: Verify quark agent proper
+  hosts: localhost
+  remote_user: harish
+  port: 2229
+  become: sudo
+  tasks:
+             
+
+        - name: Grep log file 
+          command: cat /var/log/neutron/quark-agent.log | grep ERROR
+          register: grep_output
+          ignore_errors: true
+
+        - debug:
+            var: grep_output.stdout_lines
+
+        - name: Run python script passing argument 
+          command: python log_processor.py '{{grep_output.stdout_lines}}'
+          register: python_script
+
+        - debug:
+            var: python_script.stdout_lines
+
