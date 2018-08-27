@@ -20,10 +20,15 @@
               grep_output.stdout_lines
 
         - name: A task which happens only when some log line is present
-          when: grep_output.stdout_lines[0].find('wifi') !=-1
+          when: grep_output.stdout_lines[{{item}}].find('wifi') !=-1
           with_items: 
-            -  grep_output.stdout_lines[0]
+            -  grep_output.stdout_lines[{{item}}]
           debug: msg="quark agent alert log found"
+          loop:
+            - 0
+            - 1
+            - 2
+            - 3
 
 
         # Three things to be done, 1. replace the hardcoded error with ignore and include
