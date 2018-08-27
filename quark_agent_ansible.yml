@@ -1,5 +1,5 @@
 
-# Command to run playbook : ansible-playbook  quark_agent_ansible.yml --extra-vars='ansible_sudo_pass=harish'
+# Command to run playbook : ansible-playbook  quark_agent_ansible.yml --extra-vars='ansible_sudo_pass=harish' -v 
 
 ---
 - name: Verify quark agent proper
@@ -16,14 +16,25 @@
           ignore_errors: true
 
         - debug:
-            #var: "{{grep_output.stdout_lines}}"
-            var: grep_output.stdout_lines
-            when: grep_output.stdout_lines ! = ''
-              #loop:
-              # - {'false_positive':'First Message', 'false_negative':'second message'}
+            var:
+              grep_output.stdout_lines
 
-          
-          
+        - name: A task which happens only when some log line is present
+          when: grep_output.stdout_lines[0].find('wifi') !=-1
+          with_items: 
+            - "{{ grep_output.stdout_lines[0] }}"
+          debug: msg="quark agent alert log found"
 
+
+        # Three things to be done, 1. replace the hardcoded error with ignore and include
+        # 2. replace the with item with generic iteration.
+
+
+
+        #with:
+        #    grep_output.stdout_lines
+            #when: 
+            #  grep_output.stdout_lines ! = '';
+            
 
 
