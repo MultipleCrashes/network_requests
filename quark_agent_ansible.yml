@@ -22,7 +22,7 @@
         - name: A task which happens only when some log line is present
           when: grep_output.stdout_lines[0].find('wifi') !=-1
           with_items: 
-            - "{{ grep_output.stdout_lines[0] }}"
+            -  grep_output.stdout_lines[0]
           debug: msg="quark agent alert log found"
 
 
