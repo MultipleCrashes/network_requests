@@ -8,19 +8,18 @@
   port: 2229
   become: sudo
   tasks:
-        - name: Transfer script
-          copy: src=agent_checker.sh dest=~ mode=0777
-
-        - name: Execute the script 
-          command: sh ~/agent_checker.sh
-          register: agent_checker.sh
+             
 
         - name: Grep log file 
-          chdir: '/var/log/neutron'
-          command: 'cat quark-agent.log | grep -i error'
+          command: cat /var/log/neutron/quark-agent.log | grep ERROR
           register: grep_output
 
         - debug:
             var: grep_output.stdout_lines
+
+
           
           
+
+
+
