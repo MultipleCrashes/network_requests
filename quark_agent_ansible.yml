@@ -13,10 +13,14 @@
         - name: Grep log file 
           command: cat /var/log/neutron/quark-agent.log | grep ERROR
           register: grep_output
+          ignore_errors: true
 
         - debug:
+            #var: "{{grep_output.stdout_lines}}"
             var: grep_output.stdout_lines
-
+            when: grep_output.stdout_lines ! = ''
+              #loop:
+              # - {'false_positive':'First Message', 'false_negative':'second message'}
 
           
           
