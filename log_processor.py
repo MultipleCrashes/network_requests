@@ -9,7 +9,7 @@ error_log = sys.argv[1:]
 
 
 ignore_list = ['wifi error', 'preferred network']
-fatal_error = ['quark-agent','redis connectivity']
+fatal_error = ['quark-agent','redis connectivity', 'wifi']
 
 for log_line in error_log:
 	for major_error in fatal_error:
