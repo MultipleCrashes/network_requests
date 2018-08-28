@@ -18,9 +18,14 @@
         - debug:
             var: grep_output.stdout_lines
 
-        - name: Run python script passing argument 
+        - name: Run python script passing argument ( Another way )
           command: python log_processor.py '{{grep_output.stdout_lines}}'
           register: python_script
+
+
+        #- script: log_processor.py 
+        #  args: '{{grep_output.stdout_lines}}'
+        #  register: python_script
 
         - debug:
             var: python_script.stdout_lines
